@@ -251,3 +251,48 @@ Step3: Add steps to run a sample DELETE API Request
 
 	DELETE Example:
 	
+
+-------------------------------------------------------------------------------------------
+
+karate-config.js
+
+Configuration file in karate
+
+1. What is karate-config.js
+	Karate uses a configuration file named karate-config.js
+	Can be used to 
+		Store global variables
+		Configuration execution environment, base URLs, Timeout etc
+		Karate reads this file before executing any scenario
+		
+
+2. How to create
+	Step1: Create a new file in src/test/java
+	Step2: Name is karate-config.js
+	Step3: Create JavaScript function and add configuration
+	
+	karate-config.js contains a javascript function that returns a JSON object
+	The Key values defined in the JSON object are availabe to all feature files
+	
+	function fn(){
+	var config = {
+		name:"Satish"
+	};
+	
+	
+	var env = karate.env
+	karate.log('Env is : ',env);
+	
+	karate.configure('connectTimeout',5000);
+	karate.configure('readTimeout',5000);
+	return config;
+	}
+	
+
+3. How to use
+4. Multi environment testing
+
+
+
+
+	
