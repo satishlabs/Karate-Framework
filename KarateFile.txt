@@ -1,0 +1,253 @@
+Create Project
+	Step1: Open Eclipse
+	Step2: File -> New ->Maven Project
+	Step3: Provide the project details and create project
+	Step4: Add maven dependencies in pom.xml
+			Karate Core
+			Karate Apache
+			Karate JUnit4
+			
+	Step5: Save		
+	
+	
+
+Create 1st API Test
+
+	Step1: Create a feature file under src/test/java folder
+	Step2: Add Cucumber plugin in Eclipse > Restart Eclipse
+	Step3: Create a feature file and write a scenario
+	Step4: Create a TestRunner.java class under src/test/java
+		@RunWith(Karate.class)
+		public class TestRunner{
+			
+		}
+	
+	
+Create 1st API Test
+
+Feature: Test demo API
+	Scenario: Run a sample Get API
+		Given url is 'https://reqres.in/api/users?page=2'
+		When method GET
+		Then status 200
+	
+
+
+------------------------------------------------------------------------------
+1. How to run a simple GET API Request
+2. GET with background
+3. GET with Path,Params
+4. GET with Assertions
+
+
+What is GET method
+		GET method in HTTP is used read or access data or information
+		like:
+		 Get list of users
+		 Get details of employee
+		 Any date...
+		 In GET API Request , we do NOT  need to provide the body (payload)
+	
+	
+Step1: Create a feature file under src/test/java folder
+Step2: Add feature and scenario description
+Step3: Add steps to run a sample GET API Request
+
+Feature: GET API Demo
+
+Scenario: Get Demo 1
+		Given url 'https://reqres.in/api/users?page=2'
+		When method GET
+		Then status 200
+		And print response	
+		
+		
+
+
+GET Example2
+
+Background:
+			* url 'http://reqres.in/api'
+			* header Accept = 'application/json'
+			
+			# With Background and Path
+			Scenario: GET Demo 2
+				Given path '/users/2'
+				When method GET
+				Then status 200
+			
+
+GET Example3
+
+Background:
+			* url 'http://reqres.in/api'
+			* header Accept = 'application/json'
+			
+			# With Background and path and params
+			Scenario: Get Demo 3 with path & params
+				Given path '/users'
+				And param page = 2
+				When method GET
+				Then status 200
+				And print response	
+
+
+GET Example4
+
+Background:
+			* url 'http://reqres.in/api'
+			* header Accept = 'application/json'
+			
+			# With Background with assertions
+			Scenario: Get Demo 4
+				Given path '/users'
+				And param page = 2
+				When method GET
+				Then status 200
+				And match response.data[0].first_name != null
+				And match response.data.length == 6
+				And match $.data[1].id == 8
+				And match $.data[3].last_name == 'Fields'
+				
+				
+
+------------------------------------------------------------------------------------
+1. How to run a simple POST API Request
+2. POST with Background
+3. POST with Assertions
+4. POST with response matching from file
+5. POST with Get body data from file
+
+
+What is POST method
+	POST method in HTTP is used to create a new resource
+	Like:
+		A new user
+		A new employee
+		Any new data...
+		
+	In POST API Request, we will need to provide the body(data, payload)	
+				
+
+				
+	
+Step1: Create a feature file under src/test/java folder
+Step2: Add feature and scenario description
+Step3: Add steps to run a sample POST API Request	
+
+
+POST Example 1
+
+# Simple Post Scenario
+
+	Scenario: Post demo 1
+		Given url 'https://reqres.in/api/users'
+		And request {"name":"Satish","job":"Sr. Software Engineer"}
+		When method post
+		Then status 201
+		
+
+POST Example 2
+	Background:
+	*url 'https://reqres.in/api'
+	*header Accept = 'application/json'
+	
+		
+		
+POST Example 3
+	#Post with response assertion
+	
+	Scenario: Post DEMO 3
+	Given path '/users'
+	And request {"name":"Test Demo3","job":"API Testing"}
+	When method post
+	Then status 201
+	And match response =={"name":"Test Demo3","job":"API Testing","id":"#string","createdAt":"#ignore"}
+	
+	
+
+		
+POST Example 4
+	
+	Background:
+	*url 'https://reqres.in/api'
+	*header Accept = 'application/json'
+	*def expectedOutput = read("response1.json")
+	
+	
+	#Post with response assertion
+	Scenario: Post DEMO 4
+		Given path '/users'
+		And request {"name":"Test Demo3","job":"API Testing"}
+		When method post
+		Then status 201
+		And match response == expectedOutput
+
+
+POST Example 5
+
+#Post with Read request body data from file
+Scenario: Post Demo 5
+		Given path '/users'
+		And def requestBody = read("request1.json")
+		And request requestBody
+		
+
+POST Example 6
+#Read body data from file and change request values
+
+Scenario: Post DEMO 6
+
+	Given path '/users'
+	And def requestBody = read("request1.json")
+	And request requestBody
+	And set requestBody.job = 'Check Test'
+	When method post
+	Then status 201
+	
+	
+-----------------------------------------------------------------------------------
+1. What is PUT method
+	PUT method in HTTP is used to update a resource data on the server used in API request when required to modify a resource, replace the resource
+	For the partial update use PATCH
+	
+	In PUT API Request, we will need to provide the body(data,payload)
+
+2. How to run simple PUT API Request
+
+
+	Step1: Create a feature file under src/test/java folder
+	Step2: Add feature and scenario description
+	Step3: Add steps to run a sample PUT API Request	
+		
+		
+	PUT Example
+		
+		Feature: PUT API Request demo
+		
+		#PUT
+		Scenario: PUT DEMO 1
+			Given url 'https://reqres.in/api/users/2'
+			And request {"name":"Satish","job":"Software Developer"}
+			When method PUT
+			Then status 200
+			And print response
+			And print responseStatus
+			
+
+-----------------------------------------------------------------------------------------
+DELETE
+
+What is DELETE method
+		HTTP DELETE method removes the specified resource from the server
+		The resource is identified by the URI
+		Ex: https://reqres.in/api/users/2
+		
+		Body is NOT required in DELETE request
+		
+Step1: Create a feature file under src/test/java folder
+Step2: Add feature and scenario description
+Step3: Add steps to run a sample DELETE API Request		
+
+	DELETE Example:
+	
