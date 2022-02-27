@@ -283,6 +283,16 @@ Configuration file in karate
 	var env = karate.env
 	karate.log('Env is : ',env);
 	
+	
+	if(env == 'qa'){
+       config.baseURL = 'https://reqres.in/api/qa'
+	}else if(env == 'dev'){
+		config.baseURL = 'https://reqres.in/api/dev'
+	}else{
+		config.baseURL = 'https://reqres.in/api/default'
+	}
+	
+	
 	karate.configure('connectTimeout',5000);
 	karate.configure('readTimeout',5000);
 	return config;
@@ -295,4 +305,17 @@ Configuration file in karate
 
 
 
+	How to call karate-config.js file ?
+	==
+		No need to call , it is called by default
+		Must keep the file under src/test/java
+		
+		The value for configuration can be passed from
+		
+		TestRunner 																	Command line
+																					Go in Project folder path and run the command
+		@BeforClass																	mvn test
+			public static void before(){											mvn test -Denv=qa
+				System.setProperty("karate.env","qa");
+			}
 	

@@ -1,0 +1,33 @@
+-------------------------------------------------------------------------------
+Test set: tests.TestRunner
+-------------------------------------------------------------------------------
+Tests run: 18, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 13.912 sec <<< FAILURE!
+[2:12] Config Demo 2([tests/MyConfigeDemo] Config-Demo)  Time elapsed: 0.808 sec  <<< ERROR!
+com.intuit.karate.KarateException: status code was: 404, expected: 200, response time in milliseconds: 769, url: https://reqres.in/api/dev/users?page=2, response: 
+{}
+classpath:tests/MyConfigeDemo.feature:16
+	at <feature>.: Then status 200 (classpath:tests/MyConfigeDemo.feature:16:16)
+
+[5:48] Post Demo 5([tests/Post] Post API Demo)  Time elapsed: 0.815 sec  <<< ERROR!
+com.intuit.karate.KarateException: match failed: EQUALS
+  $ | not equal | actual does not contain key - 'name' (MAP:MAP)
+  {"createdAt":"2022-02-27T01:22:51.128Z","id":"967"}
+  {"createdAt":"#ignore","id":"#string","name":"Test Demo4","job":"API Testing"}
+
+
+classpath:tests/Post.feature:58
+	at <feature>.: And match $ == expectedOutput (classpath:tests/Post.feature:58:58)
+
+[6:63] Post Demo 6([tests/Post] Post API Demo)  Time elapsed: 0.614 sec  <<< ERROR!
+com.intuit.karate.KarateException: match failed: EQUALS
+  $ | not equal | match failed for name: 'job' (MAP:MAP)
+  {"createdAt":"2022-02-27T01:22:51.910Z","name":"Test Demo4","id":"742","job":"Test Check"}
+  {"createdAt":"#ignore","name":"Test Demo4","id":"#string","job":"API Testing"}
+
+    $.job | not equal (STRING:STRING)
+    'Test Check'
+    'API Testing'
+
+classpath:tests/Post.feature:71
+	at <feature>.: And match $ == expectedOutput (classpath:tests/Post.feature:71:71)
+
