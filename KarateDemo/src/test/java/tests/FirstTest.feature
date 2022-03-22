@@ -5,5 +5,5 @@ Feature: Sample demo API
 		When method GET
 		Then status 200
 	
-	Scenario: Demo Test
+	Scenario: Demo Test With Hello 
 		* print "Hello"
