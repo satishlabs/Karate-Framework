@@ -1,4 +1,4 @@
-Feature: Test demo API
+Feature: Sample demo API
 
 	Scenario: Run a sample Get API
 		Given url 'https://reqres.in/api/users?page=2'
